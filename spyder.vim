@@ -23,6 +23,7 @@ wincmd h
 
 nnoremap g<CR> :0,.+1?^#%%?;/^#%%\\|\%$/call ConsoleSendCell("console")<CR>
 vnoremap gc :call ConsoleSendSelection("console")<CR>
+nnoremap gs :call ConsoleSendFile("console")<CR>
 
 function! ConsoleSendSelection(bufname)
   " backup register
@@ -45,4 +46,7 @@ function! ConsoleSendCell(bufname) range
 endfunction
 
 
+function! ConsoleSendFile(bufname)
+  call term_sendkeys(a:bufname, "\e[200~" . join(getline(1,"$"), "\n") . "\e[201~\n\n")
+endfunction
 
